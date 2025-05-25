@@ -4,7 +4,8 @@ const cardTemplate = document.querySelector("#card-template").content;
 
 function createCard(card) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-
+  const deleteButton = cardElement.querySelector(".card__delete-button");
+  
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
 
@@ -12,14 +13,13 @@ function createCard(card) {
   cardImage.alt = card.name;
   cardTitle.textContent = card.name;
 
-  deleteCard(cardElement);
+  deleteButton.addEventListener("click", () => deleteCard(cardElement));
 
   return cardElement;
 }
 
 function deleteCard(cardElement) {
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-  deleteButton.addEventListener("click", () => cardElement.remove());
+  cardElement.remove();
 }
 
 function renderCards() {
