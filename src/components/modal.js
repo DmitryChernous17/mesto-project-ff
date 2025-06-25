@@ -10,6 +10,18 @@ export function closePopup(popup) {
   document.removeEventListener("keydown", handleEscClose);
 }
 
+export function openImgPopup(name, link) {
+  const popupImage = document.querySelector(".popup_type_image");
+  const popupImageElement = popupImage.querySelector(".popup__image");
+  const popupImageCaption = popupImage.querySelector(".popup__caption");
+
+  popupImageElement.src = link;
+  popupImageElement.alt = name;
+  popupImageCaption.textContent = name;
+
+  openPopup(popupImage);
+}
+
 function handleEscClose(event) {
   if (event.key === "Escape") {
     const openedPopup = document.querySelector(".popup_is-opened");

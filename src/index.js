@@ -1,7 +1,12 @@
 import "./pages/index.css";
 import { initialCards } from "./components/cards.js";
 import { createCard, deleteCard, pushLike } from "./components/card.js";
-import {  openPopup, closePopup, handleOverlayClose } from "./components/modal.js";
+import {
+  openPopup,
+  closePopup,
+  handleOverlayClose,
+  openImgPopup,
+} from "./components/modal.js";
 import avatar from "./images/avatar.jpg";
 
 const placesList = document.querySelector(".places__list");
@@ -11,9 +16,6 @@ const profileImage = document.querySelector(".profile__image");
 const popups = document.querySelectorAll(".popup");
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupAdd = document.querySelector(".popup_type_new-card");
-const popupImage = document.querySelector(".popup_type_image");
-const popupImageElement = popupImage.querySelector(".popup__image");
-const popupImageCaption = popupImage.querySelector(".popup__caption");
 
 // Кнопки
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -36,7 +38,7 @@ profileImage.style.backgroundImage = `url(${avatar})`;
 // Карточки
 function renderCards() {
   initialCards.forEach((card) => {
-    const cardElement = createCard(card, pushLike, openImgPopup);
+    const cardElement = createCard(card, pushLike, openImgPopup, deleteCard);
     placesList.append(cardElement);
   });
 }
@@ -45,14 +47,6 @@ function renderCards() {
 popups.forEach((popup) => {
   popup.classList.add("popup_is-animated");
 });
-
-function openImgPopup(event) {
-  popupImageElement.src = event.target.src;
-  popupImageElement.alt = event.target.alt;
-  popupImageCaption.textContent = event.target.alt;
-
-  openPopup(popupImage);
-}
 
 closeButtons.forEach((button) => {
   const popup = button.closest(".popup");
@@ -89,7 +83,7 @@ function handleCardFormSubmit(evt) {
     link: cardImg.value,
   };
 
-  const cardElement = createCard(newCard, pushLike, openImgPopup);
+  const cardElement = createCard(newCard, pushLike, openImgPopup, deleteCard);
   placesList.prepend(cardElement);
 
   cardForm.reset();
